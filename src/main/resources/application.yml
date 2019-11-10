@@ -1,0 +1,34 @@
+spring: 
+  # 文件上传 
+  multipart: 
+      max-request-size: 10MB 
+      max-file-size: 10MB 
+  datasource: 
+    url: jdbc:mysql://127.0.0.1:3309/pinmao?serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 300
+    minIdle: 100
+    maxActive: 1000
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    #exceptionSorter: true
+    testOnReturn: false
+    poolPreparedStatements: true
+    #filter: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    useGlobalDataSourceStat: true
+# 上传路径
+upload: 
+  filePath: E://java//upload//
+mybatis:
+  mapperLocations: classpath:com/softtron/pinmaoorder/dao/*.xml
+logging: 
+  config: classpath:log4j2.xml

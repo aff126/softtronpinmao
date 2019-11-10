@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.softtron.pinmaoorder.dao.CategoryDao">
+<resultMap type="com.softtron.pinmaoorder.domains.TCategory" id="category">
+<id property="categoryId" column="categoryId"/>
+<result property="categoryname" column="categoryname"/>
+<result property="parentId" column="parentId"/>
+<collection ofType="com.softtron.pinmaoorder.domains.TCategory" property="children" javaType="java.util.List" >
+<id property="categoryId" column="scategoryId"/>
+<result property="categoryname" column="scategoryname"/>
+<result property="parentId" column="sparentId"/>
+</collection>
+</resultMap>
+<select id="findallCategory"  resultMap="category">
+	select p.*,s.categoryId as scategoryId,s.categoryname as scategoryname, s.parentId as sparentId from t_category p left join t_category s on p.categoryId = s.parentId where p.parentId = 1 order by categoryid asc
+</select>
+<insert id="inserCategory" useGeneratedKeys="true"  keyProperty="categoryId" parameterType="com.softtron.pinmaoorder.domains.TCategory">
+	insert into t_category(categoryname,parentId) value(#{categoryname},#{parentId})
+</insert>
+<update id="updataCategory" parameterType="com.softtron.pinmaoorder.domains.TCategory">
+	UPDATE t_category SET categoryname=#{categoryname} WHERE categoryId=#{categoryId}
+</update>
+<delete id="deleteCategory" parameterType="java.lang.Integer">
+	DELETE FROM t_category WHERE categoryId=#{categoryId}
+</delete>
+</mapper>
